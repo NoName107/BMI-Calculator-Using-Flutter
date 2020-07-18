@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Gender extends StatelessWidget {
-  Gender(this.text, this.icon);
+  Gender({this.text, this.icon});
 
   final String text;
   final IconData icon;
