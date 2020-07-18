@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'reusable.dart';
+import 'gender.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+const activeColor = Color(0xFF1D1E33);
 
 void main() => runApp(BMICalculator());
 
@@ -6,6 +11,13 @@ class BMICalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Color(0xFF0A0E21),
+        scaffoldBackgroundColor: Color(0xFF0A0E21),
+        textTheme: TextTheme(
+          bodyText2: TextStyle(color: Colors.white),
+        ),
+      ),
       home: InputPage(),
     );
   }
@@ -23,11 +35,47 @@ class _InputPageState extends State<InputPage> {
       appBar: AppBar(
         title: Text('BMI CALCULATOR'),
       ),
-      body: Center(
-        child: Text('Body Text'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+              child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Reusable(
+                  activeColor,
+                  Gender('MALE', FontAwesomeIcons.mars),
+                ),
+              ),
+              Expanded(
+                child: Reusable(
+                  activeColor,
+                  Gender('FEMALE', FontAwesomeIcons.mars),
+                ),
+              ),
+            ],
+          )),
+          Expanded(
+            child: Reusable(activeColor),
+          ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Reusable(activeColor),
+                ),
+                Expanded(
+                  child: Reusable(activeColor),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            color: Color(0xFFEB1555),
+            margin: EdgeInsets.only(top: 10.0),
+            width: double.infinity,
+            height: 80.0,
+          ),
+        ],
       ),
     );
   }
