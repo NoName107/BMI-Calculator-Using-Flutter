@@ -1,10 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'reusable.dart';
 import 'gender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-const activeColor = Color(0xFF1D1E33);
-const inactiveColor = Color(0xFF111328);
+import 'constants.dart';
 
 enum Gender1 {
   male,
@@ -36,29 +35,9 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender1 selectedGender;
-
-  Color maleCardColor = inactiveColor;
-  Color femaleCardColor = inactiveColor;
-
-  void updateColor(Gender1 gender) {
-    maleCardColor =
-        maleCardColor == inactiveColor ? activeColor : inactiveColor;
-    if (gender == Gender1.male) {
-      if (maleCardColor == inactiveColor) {
-        maleCardColor = activeColor;
-        femaleCardColor = inactiveColor;
-      } else {
-        maleCardColor = inactiveColor;
-      }
-    } else if (gender == Gender1.female) {
-      if (femaleCardColor == inactiveColor) {
-        femaleCardColor = activeColor;
-        maleCardColor = inactiveColor;
-      } else {
-        femaleCardColor = inactiveColor;
-      }
-    }
-  }
+  int height = 180;
+  int weight = 60;
+  int age = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +46,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
@@ -79,8 +59,8 @@ class _InputPageState extends State<InputPage> {
                       });
                     },
                     color: selectedGender == Gender1.male
-                        ? activeColor
-                        : inactiveColor,
+                        ? kActiveColor
+                        : kInactiveColor,
                     child: Gender(
                       text: 'MALE',
                       icon: FontAwesomeIcons.mars,
@@ -95,8 +75,8 @@ class _InputPageState extends State<InputPage> {
                       });
                     },
                     color: selectedGender == Gender1.female
-                        ? activeColor
-                        : inactiveColor,
+                        ? kActiveColor
+                        : kInactiveColor,
                     child: Gender(
                       text: 'FEMALE',
                       icon: FontAwesomeIcons.venus,
@@ -106,28 +86,176 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-//          Expanded(
-//            child: Reusable(activeColor),
-//          ),
-//          Expanded(
-//            child: Row(
-//              children: <Widget>[
-//                Expanded(
-//                  child: Reusable(activeColor),
-//                ),
-//                Expanded(
-//                  child: Reusable(activeColor),
-//                ),
-//              ],
-//            ),
-//          ),
+          Expanded(
+            child: Reusable(
+              color: kActiveColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'HEIGHT',
+                    style: kTextStyle1,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: kTextStyle2,
+                      ),
+                      Text(
+                        'cm',
+                        style: kTextStyle1,
+                      ),
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: Colors.white,
+                          inactiveTrackColor: Color(0xFF8D8E98),
+                          thumbColor: Color(0xFFEB1555),
+                          overlayColor: Color(0x55EB1555),
+                          thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                          overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 30.0),
+                        ),
+                        child: Slider(
+                          value: height.toDouble(),
+                          min: 120.0,
+                          max: 220.0,
+                          onChanged: (double newValue) {
+                            setState(() {
+                              height = newValue.round();
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Reusable(
+                    color: kActiveColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'WEIGHT',
+                          style: kTextStyle1,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kTextStyle2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundButton(
+                              icon: FontAwesomeIcons.minus,
+                              press: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundButton(
+                              icon: FontAwesomeIcons.plus,
+                              press: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Reusable(
+                    color: kActiveColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'AGE',
+                          style: kTextStyle1,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kTextStyle2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundButton(
+                              icon: FontAwesomeIcons.minus,
+                              press: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundButton(
+                              icon: FontAwesomeIcons.plus,
+                              press: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Container(
             color: Color(0xFFEB1555),
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: 80.0,
+            height: 60.0,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class RoundButton extends StatelessWidget {
+  RoundButton({this.icon, this.press});
+
+  final IconData icon;
+  final Function press;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: press,
+      elevation: 6.0,
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+      constraints: BoxConstraints.tightFor(
+        width: 50.0,
+        height: 50.0,
       ),
     );
   }
